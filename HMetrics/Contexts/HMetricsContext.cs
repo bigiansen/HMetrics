@@ -15,6 +15,21 @@ namespace HMetrics.Contexts
         private HMetricsContext _parent = null;
         private Dictionary<string, HMetricsContext> _children = null;
 
+        public IntegerAccumulatorSampler Meter(string name, int samplingTimeWindow)
+        {
+            return new IntegerAccumulatorSampler(name, samplingTimeWindow);
+        }
+
+        public TimeSampler Timer(string name)
+        {
+            return new TimeSampler(name);
+        }
+
+        public ValueSampler<T> Histogram<T>(string name)
+        {
+            return new ValueSampler<T>(name);
+        }
+
         public enum ReportMode
         {
             Standard, IncludeChildren
