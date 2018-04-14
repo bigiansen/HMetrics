@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HMetrics.Reporting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,7 @@ namespace HMetrics.Sampling.Samplers
         {
             Name = name;
         }
+
+        public abstract ReportEntry AsReportEntry(Stack<string> contextStack, bool reset);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using HMetrics.Metrics;
+using HMetrics.Reporting;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,6 +23,17 @@ namespace HMetrics.Sampling.Samplers
             : base(name)
         {
             this._timeWindow = timeWindowMs;
+        }
+
+        public override ReportEntry AsReportEntry(Stack<string> contextStack, bool reset)
+        {
+            ReportEntry result = new ReportEntry();
+            result.ContextStack = contextStack;
+            foreach(Sample<int> sample in _histogram.GetAllSamples(reset))
+            {
+                result.JsonSamples.Add(sample.ToJson());
+            }
+            return result;
         }
 
         public void Mark(int amount = 1)

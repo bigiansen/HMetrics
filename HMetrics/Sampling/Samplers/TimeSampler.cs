@@ -1,4 +1,6 @@
 ﻿using HMetrics.Metrics;
+using HMetrics.Reporting;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,17 @@ namespace HMetrics.Sampling.Samplers
             TimeSamplerContext ctx = new TimeSamplerContext(this);
             ctx.Start();
             return ctx;
+        }
+
+        public override ReportEntry AsReportEntry(Stack<string> contextStack, bool reset)
+        {
+            ReportEntry result = new ReportEntry();
+            result.ContextStack = contextStack;
+            foreach (Sample<double> sample in _histogram.GetAllSamples(reset))
+            {
+                result.JsonSamples.Add(sample.ToJson());
+            }
+            return result;
         }
     }
 }

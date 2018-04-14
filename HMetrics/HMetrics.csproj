@@ -44,9 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contexts\HMetricsContext.cs" />
-    <Compile Include="Global\GlobalContext.cs" />
+    <Compile Include="Contexts\GlobalContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Metrics\Histogram.cs" />
+    <Compile Include="Reporting\ReportEntry.cs" />
     <Compile Include="Sampling\Sample.cs" />
     <Compile Include="Sampling\Samplers\NamedSampler.cs" />
     <Compile Include="Sampling\Samplers\IntegerAccumulatorSampler.cs" />

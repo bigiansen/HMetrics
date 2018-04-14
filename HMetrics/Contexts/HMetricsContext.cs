@@ -1,4 +1,5 @@
-﻿using HMetrics.Sampling.Samplers;
+﻿using HMetrics.Reporting;
+using HMetrics.Sampling.Samplers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,11 @@ namespace HMetrics.Contexts
 
         private HMetricsContext _parent = null;
         private Dictionary<string, HMetricsContext> _children = null;
+
+        public enum ReportMode
+        {
+            Standard, IncludeChildren
+        }
 
         public List<NamedSampler> Samplers { get; set; } = new List<NamedSampler>();
 
@@ -31,6 +37,21 @@ namespace HMetrics.Contexts
             {
                 return _parent.GetContextName(contextSeparator) + contextSeparator + Name;
             }
+        }
+
+        public Stack<string> GetContextStack()
+        {
+            List<string> result = new List<string>();
+            result.Add(this.Name);
+
+            HMetricsContext currentCtx = this;
+            while(currentCtx.GetParent() != null)
+            {
+                currentCtx = currentCtx.GetParent();
+                result.Add(currentCtx.Name);
+            }
+            result.Reverse();
+            return new Stack<string>(result);            
         }
 
         public HMetricsContext GetParent()
@@ -53,9 +74,35 @@ namespace HMetrics.Contexts
             }
         }
 
-        public void Report(bool reset)
+        public List<ReportEntry> Report(bool reset, ReportMode mode = ReportMode.Standard)
         {
-            throw new NotImplementedException();
+            List<ReportEntry> result = new List<ReportEntry>();
+            result.AddRange(ReportStandard(reset));
+            if (mode == ReportMode.IncludeChildren)
+            {
+                result.AddRange(ReportChildren(reset));
+            }
+            return result;
+        }
+
+        private List<ReportEntry> ReportStandard(bool reset)
+        {
+            List<ReportEntry> result = new List<ReportEntry>();
+            foreach(NamedSampler sampler in Samplers)
+            {
+                result.Add(sampler.AsReportEntry(this.GetContextStack(), reset));
+            }
+            return result;
+        }
+
+        private List<ReportEntry> ReportChildren(bool reset)
+        {
+            List<ReportEntry> result = new List<ReportEntry>();
+            foreach(HMetricsContext childCtx in _children.Values)
+            {
+                result.AddRange(childCtx.Report(reset, ReportMode.IncludeChildren));
+            }
+            return result;
         }
     }
 }

@@ -15,6 +15,6 @@ namespace HMetrics.Sampling
         {
             TimeStamp = timeStamp;
             Value = value;
-        }        
+        }
     }
 }
