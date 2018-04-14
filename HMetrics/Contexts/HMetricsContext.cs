@@ -52,5 +52,10 @@ namespace HMetrics.Contexts
                 return ctx;
             }
         }
+
+        public void Report(bool reset)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
