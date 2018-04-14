@@ -14,5 +14,7 @@ namespace HMetrics.Sampling.Samplers
         {
             Name = name;
         }
+
+        public abstract string GetSamplesJson(bool reset);
     }
 }

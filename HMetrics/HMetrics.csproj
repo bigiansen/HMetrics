@@ -43,10 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexts\HMetricsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Metrics\Histogram.cs" />
     <Compile Include="Sampling\Sample.cs" />
-    <Compile Include="Sampling\Samplers\BaseSampler.cs" />
+    <Compile Include="Sampling\Samplers\NamedSampler.cs" />
     <Compile Include="Sampling\Samplers\IntegerAccumulatorSampler.cs" />
     <Compile Include="Sampling\Samplers\TimeSampler.cs" />
     <Compile Include="Sampling\Samplers\TimeSamplerContext.cs" />
