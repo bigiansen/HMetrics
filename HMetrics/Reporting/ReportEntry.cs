@@ -11,5 +11,11 @@ namespace HMetrics.Reporting
     {
         public Stack<String> ContextStack { get; set; }
         public List<string> JsonSamples { get; set; }
+
+        public ReportEntry()
+        {
+            ContextStack = new Stack<string>();
+            JsonSamples = new List<string>();
+        }
     }
 }

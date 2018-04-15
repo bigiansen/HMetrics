@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,10 @@
     <Compile Include="HMetrics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Metrics\Histogram.cs" />
+    <Compile Include="Reporting\BaseReporter.cs" />
+    <Compile Include="Reporting\ElasticSearch\ESReport.cs" />
+    <Compile Include="Reporting\ElasticSearch\ESReporter.cs" />
+    <Compile Include="Reporting\ElasticSearch\ESReporterConfig.cs" />
     <Compile Include="Reporting\ReportEntry.cs" />
     <Compile Include="Sampling\Sample.cs" />
     <Compile Include="Sampling\Samplers\NamedSampler.cs" />

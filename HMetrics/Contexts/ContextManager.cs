@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HMetrics
 {
-    public static class ContextManager
+    public static class HMetricsContextManager
     {
         private static Dictionary<string, HMetricsContext> _contexts = new Dictionary<string, HMetricsContext>();
 
@@ -26,12 +26,12 @@ namespace HMetrics
             }
         }
 
-        public static List<HMetricsContext> GetAllLvl1Contexts()
+        internal static List<HMetricsContext> GetAllLvl1Contexts()
         {
             return _contexts.Values.ToList();
         }
 
-        public static List<ReportEntry> Report(bool resetMetrics)
+        internal static List<ReportEntry> Report(bool resetMetrics)
         {
             List<ReportEntry> result = new List<ReportEntry>();
             var contexts = GetAllLvl1Contexts();

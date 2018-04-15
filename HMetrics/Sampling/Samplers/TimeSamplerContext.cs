@@ -19,7 +19,7 @@ namespace HMetrics.Sampling.Samplers
 
         public void Start()
         {
-            _stopWatch.Start();
+            _stopWatch = Stopwatch.StartNew();
         }
 
         public void Stop()

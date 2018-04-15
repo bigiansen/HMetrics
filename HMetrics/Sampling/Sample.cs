@@ -8,12 +8,12 @@ namespace HMetrics.Sampling
 {
     public class Sample<T>
     {
-        public DateTime TimeStamp { get; set; }
+        public DateTime Date { get; set; }
         public T Value { get; set; }
 
         public Sample(DateTime timeStamp, T value)
         {
-            TimeStamp = timeStamp;
+            Date = timeStamp;
             Value = value;
         }
     }

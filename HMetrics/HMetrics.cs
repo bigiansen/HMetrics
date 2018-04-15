@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace HMetrics
 {
-    public static class HMetrics
+    public static class Global
     {
         public static HMetricsContext Context(string name)
         {
-            return ContextManager.GetContext(name);
+            return HMetricsContextManager.GetContext(name);
         }
     }
 }

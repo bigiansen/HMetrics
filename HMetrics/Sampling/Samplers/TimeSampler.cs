@@ -1,11 +1,13 @@
 ﻿using HMetrics.Metrics;
 using HMetrics.Reporting;
 using ServiceStack;
+using ServiceStack.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
 
 namespace HMetrics.Sampling.Samplers
 {
@@ -33,6 +35,7 @@ namespace HMetrics.Sampling.Samplers
             result.ContextStack = contextStack;
             foreach (Sample<double> sample in _histogram.GetAllSamples(reset))
             {
+                JsConfig.DateHandler = DateHandler.ISO8601;
                 result.JsonSamples.Add(sample.ToJson());
             }
             return result;

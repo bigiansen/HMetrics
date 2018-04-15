@@ -15,34 +15,40 @@ namespace HMetrics.Contexts
         private HMetricsContext _parent = null;
         private Dictionary<string, HMetricsContext> _children = null;
 
+        internal List<NamedSampler> Samplers { get; set; } = new List<NamedSampler>();
+
         public IntegerAccumulatorSampler Meter(string name, int samplingTimeWindow)
         {
-            return new IntegerAccumulatorSampler(name, samplingTimeWindow);
+            var sampler = new IntegerAccumulatorSampler(name, samplingTimeWindow);
+            Samplers.Add(sampler);
+            return sampler;
         }
 
         public TimeSampler Timer(string name)
         {
-            return new TimeSampler(name);
+            var sampler = new TimeSampler(name);
+            Samplers.Add(sampler);
+            return sampler;
         }
 
         public ValueSampler<T> Histogram<T>(string name)
         {
-            return new ValueSampler<T>(name);
+            var sampler = new ValueSampler<T>(name);
+            Samplers.Add(sampler);
+            return sampler;
         }
 
         public enum ReportMode
         {
             Standard, IncludeChildren
-        }
-
-        public List<NamedSampler> Samplers { get; set; } = new List<NamedSampler>();
+        }        
 
         public HMetricsContext(string name)
         {
             Name = name;
         }
 
-        public string GetContextName(string contextSeparator = ".")
+        internal string GetContextName(string contextSeparator = ".")
         {
             if(_parent == null)
             {
@@ -54,7 +60,7 @@ namespace HMetrics.Contexts
             }
         }
 
-        public Stack<string> GetContextStack()
+        internal Stack<string> GetContextStack()
         {
             List<string> result = new List<string>();
             result.Add(this.Name);
@@ -89,11 +95,11 @@ namespace HMetrics.Contexts
             }
         }
 
-        public List<ReportEntry> Report(bool reset, ReportMode mode = ReportMode.Standard)
+        internal List<ReportEntry> Report(bool reset, ReportMode mode = ReportMode.Standard)
         {
             List<ReportEntry> result = new List<ReportEntry>();
             result.AddRange(ReportStandard(reset));
-            if (mode == ReportMode.IncludeChildren)
+            if (mode == ReportMode.IncludeChildren && _children != null)
             {
                 result.AddRange(ReportChildren(reset));
             }

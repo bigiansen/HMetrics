@@ -2,3 +2,5 @@
 packages/
 HMetrics/bin
 HMetrics/obj
+Test/bin
+Test
