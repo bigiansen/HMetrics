@@ -51,6 +51,7 @@
     <Compile Include="Sampling\IntAccumulatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sampling\TimeSamplerTests.cs" />
+    <Compile Include="Sampling\ValueSamplerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
