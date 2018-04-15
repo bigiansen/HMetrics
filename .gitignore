@@ -4,3 +4,5 @@ HMetrics/bin
 HMetrics/obj
 Test/bin
 Test
+HMetrics.Tests/bin
+HMetrics.Tests/obj

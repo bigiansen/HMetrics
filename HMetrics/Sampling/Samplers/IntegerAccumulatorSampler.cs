@@ -13,23 +13,24 @@ namespace HMetrics.Sampling.Samplers
 {
     public class IntegerAccumulatorSampler : NamedSampler
     {
-        private Histogram<int> _histogram = new Histogram<int>();
-        private int _accumulator = 0;
+        internal Histogram<int> Histogram = new Histogram<int>();
+        internal int Accumulator = 0;
         private int _timeWindow;
         private Task _cyclingTask;
         private object _cycleLock = new object();
+        private bool _started = false;
 
         public IntegerAccumulatorSampler(string name, int timeWindowMs) 
             : base(name)
         {
-            this._timeWindow = timeWindowMs;
+            this._timeWindow = timeWindowMs;            
         }
 
         public override ReportEntry AsReportEntry(Stack<string> contextStack, bool reset)
         {
             ReportEntry result = new ReportEntry();
             result.ContextStack = contextStack;
-            foreach(Sample<int> sample in _histogram.GetAllSamples(reset))
+            foreach(Sample<int> sample in Histogram.GetAllSamples(reset))
             {
                 result.JsonSamples.Add(sample.ToJson());
             }
@@ -38,9 +39,14 @@ namespace HMetrics.Sampling.Samplers
 
         public void Mark(int amount = 1)
         {
+            if(!_started)
+            {
+                _started = true;
+                InitCycling();
+            }
             lock (_cycleLock)
             {
-                _accumulator += amount;
+                Accumulator += amount;
             }
         }
 
@@ -54,10 +60,10 @@ namespace HMetrics.Sampling.Samplers
                     int value;
                     lock (_cycleLock)
                     {
-                        value = _accumulator;
-                        _accumulator = 0;
+                        value = Accumulator;
+                        Accumulator = 0;
                     }
-                    _histogram.Sample(value);
+                    Histogram.Sample(value);
                 }
             });
         }
