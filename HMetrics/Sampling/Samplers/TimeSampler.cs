@@ -13,13 +13,13 @@ namespace HMetrics.Sampling.Samplers
 {
     public class TimeSampler : NamedSampler
     {
-        private Histogram<double> _histogram = new Histogram<double>();
+        internal Histogram<double> Histogram = new Histogram<double>();
 
         public TimeSampler(string name) : base(name) { }
 
         internal void Sample(double value)
         {
-            _histogram.Sample(value);
+            Histogram.Sample(value);
         }
 
         public TimeSamplerContext NewContext()
@@ -33,7 +33,7 @@ namespace HMetrics.Sampling.Samplers
         {
             ReportEntry result = new ReportEntry();
             result.ContextStack = contextStack;
-            foreach (Sample<double> sample in _histogram.GetAllSamples(reset))
+            foreach (Sample<double> sample in Histogram.GetAllSamples(reset))
             {
                 JsConfig.DateHandler = DateHandler.ISO8601;
                 result.JsonSamples.Add(sample.ToJson());

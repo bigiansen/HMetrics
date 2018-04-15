@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Sampling\IntAccumulatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sampling\TimeSamplerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

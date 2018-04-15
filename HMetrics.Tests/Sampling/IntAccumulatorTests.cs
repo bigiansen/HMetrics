@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HMetrics.Tests.Sampling
 {
-    [TestClass]
+    [TestClass, TestCategory("IntegerAccumulator")]
     public class IntAccumulatorTests
     {
         private IntegerAccumulatorSampler sampler;
@@ -29,7 +29,7 @@ namespace HMetrics.Tests.Sampling
             var samples = sampler.Histogram.GetAllSamples(false);
             Assert.AreEqual(0, samples.Count);
 
-            Thread.Sleep(TIMEWINDOW);
+            Thread.Sleep(TIMEWINDOW + 10);
 
             samples = sampler.Histogram.GetAllSamples(false);
             Assert.AreEqual(1, samples.Count);
@@ -43,7 +43,7 @@ namespace HMetrics.Tests.Sampling
             var samples = sampler.Histogram.GetAllSamples(false);
             Assert.AreEqual(0, samples.Count);
 
-            Thread.Sleep(TIMEWINDOW);
+            Thread.Sleep(TIMEWINDOW + 10);
 
             samples = sampler.Histogram.GetAllSamples(false);
             Assert.AreEqual(1, samples.Count);
