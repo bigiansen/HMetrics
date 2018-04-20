@@ -55,6 +55,10 @@
     <Compile Include="Reporting\ElasticSearch\ESReporterConfig.cs" />
     <Compile Include="Reporting\ReportEntry.cs" />
     <Compile Include="Sampling\Sample.cs" />
+    <Compile Include="Sampling\Samplers\Float128ValueSampler.cs" />
+    <Compile Include="Sampling\Samplers\Float32ValueSampler.cs" />
+    <Compile Include="Sampling\Samplers\Float64ValueSampler.cs" />
+    <Compile Include="Sampling\Samplers\IntegerValueSampler.cs" />
     <Compile Include="Sampling\Samplers\NamedSampler.cs" />
     <Compile Include="Sampling\Samplers\IntegerAccumulatorSampler.cs" />
     <Compile Include="Sampling\Samplers\TimeSampler.cs" />

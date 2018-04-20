@@ -17,23 +17,58 @@ namespace HMetrics.Contexts
 
         internal List<NamedSampler> Samplers { get; set; } = new List<NamedSampler>();
 
-        public IntegerAccumulatorSampler Meter(string name, int samplingTimeWindow)
+        public IntegerAccumulatorSampler Meter(string name, int samplingTimeWindow, string commaSeparatedTags = "")
         {
             var sampler = new IntegerAccumulatorSampler(name, samplingTimeWindow);
+            sampler.Tags = ParseTags(commaSeparatedTags);
             Samplers.Add(sampler);
             return sampler;
-        }
+        }      
 
-        public TimeSampler Timer(string name)
+        public TimeSampler Timer(string name, string commaSeparatedTags = "")
         {
             var sampler = new TimeSampler(name);
+            sampler.Tags = ParseTags(commaSeparatedTags);
             Samplers.Add(sampler);
             return sampler;
         }
 
-        public ValueSampler<T> Histogram<T>(string name)
+        public IntegerValueSampler IntegerHistogram(string name, string commaSeparatedTags = "")
+        {
+            var sampler = new IntegerValueSampler(name);
+            sampler.Tags = ParseTags(commaSeparatedTags);
+            Samplers.Add(sampler);
+            return sampler;
+        }
+
+        public Float32ValueSampler Float32Histogram(string name, string commaSeparatedTags = "")
+        {
+            var sampler = new Float32ValueSampler(name);
+            sampler.Tags = ParseTags(commaSeparatedTags);
+            Samplers.Add(sampler);
+            return sampler;
+        }
+
+        public Float64ValueSampler Float64Histogram(string name, string commaSeparatedTags = "")
+        {
+            var sampler = new Float64ValueSampler(name);
+            sampler.Tags = ParseTags(commaSeparatedTags);
+            Samplers.Add(sampler);
+            return sampler;
+        }
+
+        public Float128ValueSampler Float128Histogram(string name, string commaSeparatedTags = "")
+        {
+            var sampler = new Float128ValueSampler(name);
+            sampler.Tags = ParseTags(commaSeparatedTags);
+            Samplers.Add(sampler);
+            return sampler;
+        }        
+
+        public ValueSampler<T> CustomValueHistogram<T>(string name, string commaSeparatedTags = "")
         {
             var sampler = new ValueSampler<T>(name);
+            sampler.Tags = ParseTags(commaSeparatedTags);
             Samplers.Add(sampler);
             return sampler;
         }
@@ -124,6 +159,20 @@ namespace HMetrics.Contexts
                 result.AddRange(childCtx.Report(reset, ReportMode.IncludeChildren));
             }
             return result;
+        }
+
+        private static string[] ParseTags(string commaSeparatedTags)
+        {
+            if(string.IsNullOrWhiteSpace(commaSeparatedTags))
+            {
+                return new string[0];
+            }
+            string[] tags = commaSeparatedTags.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < tags.Length; i++) // Clean tags, just in case
+            {
+                tags[i] = tags[i].Trim();
+            }
+            return tags;
         }
     }
 }

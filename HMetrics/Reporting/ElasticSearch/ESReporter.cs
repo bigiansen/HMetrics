@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Text;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -38,14 +39,22 @@ namespace HMetrics.Reporting.ElasticSearch
 
         internal override void SendReport()
         {
-            ESReport report = ESReport.FromReportEntries(GetReport(), Configuration);
+            ESReport report;
+            using (var scope = JsConfig.BeginScope())
+            {
+                scope.DateHandler = DateHandler.ISO8601;
+                report = ESReport.FromReportEntries(GetReport(), Configuration);
+            }
+
             string fullJson = string.Join("\n", report.JsonLines) + '\n';
             if (string.IsNullOrWhiteSpace(fullJson))
             {
                 return;
             }
+
             WebClient wc = new WebClient();
             wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+
             try
             {
                 var response = wc.UploadString(BulkUrl, fullJson);

@@ -32,6 +32,7 @@ namespace HMetrics.Sampling.Samplers
             result.ContextStack = contextStack;
             foreach(Sample<int> sample in Histogram.GetAllSamples(reset))
             {
+                sample.SetTags(this.Tags);
                 result.JsonSamples.Add(sample.ToJson());
             }
             return result;

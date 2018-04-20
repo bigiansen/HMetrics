@@ -35,7 +35,7 @@ namespace HMetrics.Sampling.Samplers
             result.ContextStack = contextStack;
             foreach (Sample<double> sample in Histogram.GetAllSamples(reset))
             {
-                JsConfig.DateHandler = DateHandler.ISO8601;
+                sample.SetTags(this.Tags);
                 result.JsonSamples.Add(sample.ToJson());
             }
             return result;

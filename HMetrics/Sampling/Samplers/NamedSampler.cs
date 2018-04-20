@@ -10,6 +10,7 @@ namespace HMetrics.Sampling.Samplers
     public abstract class NamedSampler
     {
         public string Name { get; set; }
+        public string[] Tags { get; set; }
 
         public NamedSampler(string name)
         {

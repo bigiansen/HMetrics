@@ -13,7 +13,10 @@ namespace HMetrics.Sampling.Samplers
     {
         private Histogram<T> _histogram;
 
-        public ValueSampler(string name) : base(name) { }
+        public ValueSampler(string name) : base(name)
+        {
+            _histogram = new Histogram<T>();
+        }
 
         public List<Sample<T>> GetAllSamples(bool reset)
         {
@@ -41,6 +44,7 @@ namespace HMetrics.Sampling.Samplers
             result.ContextStack = contextStack;
             foreach (Sample<T> sample in _histogram.GetAllSamples(reset))
             {
+                sample.SetTags(this.Tags);
                 result.JsonSamples.Add(sample.ToJson());
             }
             return result;
