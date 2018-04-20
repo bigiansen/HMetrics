@@ -22,7 +22,7 @@ namespace HMetrics.Reporting
             var lvl1 = HMetricsContextManager.GetAllLvl1Contexts();
             foreach(HMetricsContext ctx in lvl1)
             {
-                entries.AddRange(ctx.Report(AutoResetMetrics, HMetricsContext.ReportMode.IncludeChildren));
+                entries.AddRange(ctx.Report(AutoResetMetrics, HMetricsContext.ReportMode.IncludeChildren));                
             }
             return entries;
         }

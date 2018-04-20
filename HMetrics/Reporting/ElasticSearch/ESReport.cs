@@ -34,6 +34,10 @@ namespace HMetrics.Reporting.ElasticSearch
         private string GetJsonHeaderLine(ReportEntry entry, ESReporterConfig config)
         {
             string contextIdx = string.Join(".", entry.ContextStack);
+            if (config.AppendSamplerNameToIndex)
+            {
+                contextIdx += $".{entry.SamplerName}";
+            }
             if (config.UseBaseIndex)
             {
                 return "{ \"index\" : { \"_index\" : \"" + config.BaseIndex + '.' + contextIdx + "\", \"_type\" : \"json\"}}";

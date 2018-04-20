@@ -9,6 +9,7 @@ namespace HMetrics.Reporting
 {
     public class ReportEntry
     {
+        public string SamplerName { get; set; }
         public Stack<String> ContextStack { get; set; }
         public List<string> JsonSamples { get; set; }
 

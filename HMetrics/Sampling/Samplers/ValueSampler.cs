@@ -42,6 +42,7 @@ namespace HMetrics.Sampling.Samplers
         {
             ReportEntry result = new ReportEntry();
             result.ContextStack = contextStack;
+            result.SamplerName = this.Name.ToLowerInvariant();
             foreach (Sample<T> sample in _histogram.GetAllSamples(reset))
             {
                 sample.SetTags(this.Tags);

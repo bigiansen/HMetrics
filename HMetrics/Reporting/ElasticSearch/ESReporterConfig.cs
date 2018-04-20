@@ -8,14 +8,16 @@ namespace HMetrics.Reporting.ElasticSearch
 {
     public class ESReporterConfig
     {
-        public string BaseIndex { get; set; }
-        public bool UseBaseIndex { get; set; }
+        public string BaseIndex = null;
+        public bool UseBaseIndex = true;
 
-        public string Host { get; set; }
-        public ushort Port { get; set; }
+        public string Host = "0.0.0.0";
+        public ushort Port = 0;
 
-        public int ReportingIntervalMs { get; set; }
+        public int ReportingIntervalMs = -1;
 
-        public bool AutoResetMetrics { get; set; }
+        public bool AutoResetMetrics = true;
+
+        public bool AppendSamplerNameToIndex = true;
     }
 }

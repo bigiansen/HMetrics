@@ -58,6 +58,7 @@ namespace HMetrics.Reporting.ElasticSearch
             try
             {
                 var response = wc.UploadString(BulkUrl, fullJson);
+                Debug.WriteLine(fullJson);
                 Debug.WriteLine(response);
             }
             catch(WebException webex)
