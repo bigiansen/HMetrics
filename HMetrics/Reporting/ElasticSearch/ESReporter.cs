@@ -14,6 +14,7 @@ namespace HMetrics.Reporting.ElasticSearch
 {
     public class ESReporter : BaseReporter
     {
+        private WebClient _webClient { get; set; }
         internal ESReporterConfig Configuration { get; set; }
         internal HttpClient WebClient { get; set; }
         internal string BulkUrl { get; set; }
@@ -23,6 +24,7 @@ namespace HMetrics.Reporting.ElasticSearch
             this.Configuration = config;
             WebClient = new HttpClient();
             BulkUrl = $"http://{Configuration.Host}:{Configuration.Port}/_bulk";
+            _webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
         }
 
         public void Start()
@@ -50,14 +52,11 @@ namespace HMetrics.Reporting.ElasticSearch
             if (string.IsNullOrWhiteSpace(fullJson))
             {
                 return;
-            }
-
-            WebClient wc = new WebClient();
-            wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            }           
 
             try
             {
-                var response = wc.UploadString(BulkUrl, fullJson);
+                var response = _webClient.UploadString(BulkUrl, fullJson);
                 Debug.WriteLine(fullJson);
                 Debug.WriteLine(response);
             }
